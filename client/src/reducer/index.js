@@ -2,7 +2,10 @@ const initialState = {
   videogames: [],
   allVideogames: [],
   genres: [],
+  
 };
+
+
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -13,14 +16,15 @@ function rootReducer(state = initialState, action) {
         allVideogames: action.payload,
       };
     case "FILTER_BY_GENRE":
-      const allVideogames = state.allVideogames;
-      const statusFiltered =
-        action.payload === "all"
-          ? allVideogames
-          : allVideogames.filter((el) => el.status === el.payload);
+      
+      const allVideogames = state.videogames
+      const filtrados = action.payload === 'all' 
+      ? allVideogames 
+      : allVideogames.filter(el => el.genre.includes(action.payload))
+
       return {
         ...state,
-        videogames: statusFiltered,
+        videogames: filtrados
       };
 
     case "POST_VIDEOGAME":
@@ -61,7 +65,7 @@ function rootReducer(state = initialState, action) {
 
       return {
         ...state,
-        videgames: sortedArr,
+        videogames: sortedArr,
       };
     case "GET_NAME_VIDEOGAMES":
       return {

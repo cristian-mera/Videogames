@@ -35,6 +35,7 @@ const getApiInfo = async () => {
       rating: el.rating,
       platforms: el.platforms.map((subEl) => subEl.platform.name),
       img: el.background_image,
+      genre: el.genres.map(gen => gen.name)
     };
   });
   return apiInfo;
@@ -101,6 +102,7 @@ router.post("/videogame", async (req, res) => {
     rating,
     platforms,
     createdInDb,
+    genre
   });
 
   let genreDb = await Genre.findAll({

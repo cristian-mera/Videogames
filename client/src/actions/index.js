@@ -1,6 +1,5 @@
 import axios from "axios";
 const { API_KEY } = process.env;
-console.log(API_KEY);
 
 export function getVideogames() {
   return async function (dispatch) {

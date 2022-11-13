@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getVideogames, filterVideogamesByGenre, filterCreated, orderByName } from "../actions";
+import { getVideogames, filterVideogamesByGenre, filterCreated, orderByName, getGenres } from "../actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
@@ -15,6 +15,7 @@ export default function Home() {
   const indexLastVideogame = currentPage * videogamesPerPage
   const indexFirstVideogame = indexLastVideogame - videogamesPerPage
   const currentVideogames = allVideogames.slice(indexFirstVideogame, indexLastVideogame)
+  const generos = useSelector((state) => state.genres)
 
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber)
@@ -22,7 +23,12 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getVideogames());
-  }, [dispatch]); 
+  }, [dispatch]);
+  
+  useEffect(() => {
+    dispatch(getGenres())
+  }, [dispatch]
+  )
 
   function handleClick(event) {
     event.preventDefault();
@@ -66,9 +72,9 @@ export default function Home() {
           <option value="descendent">Descendent</option>
         </select>
         <select onChange={targetValue => handleFilterByGenre(targetValue)}>
-          <option value="">Genre1</option>
-          <option value="">Genre2</option>
-          <option value="">Genre3</option>
+          {generos.map((gen) => (
+            <option value={gen.name.toString()}>{gen.name}</option>
+          ))}
         </select>
         <select onChange={targetValue => handleFilterCreated(targetValue)}>
           <option value="all">All Videogames</option>
@@ -83,11 +89,12 @@ export default function Home() {
         <SearchBar/>
 
         {currentVideogames?.map((el) => {
+          
           return (
-            
               <Link key={el.id} to={"/home/" + el.id}>
                                                           {/* agregar imagen por default */}
-                <Card name={el.name} img={el.img ? el.img : '../videogame.png'} genre={el.genre} />;
+                <Card name={el.name} img={el.img ? el.img : '../videogame.png'} genre={el.genre}  />;
+                {/* {console.log(el.genre)} */}
               </Link>
             
           );
