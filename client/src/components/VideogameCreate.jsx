@@ -25,14 +25,15 @@ export default function VideogameCreate() {
     description: "",
     released: "",
     rating: "",
+    img:"",
     platforms: [],
-    genre: [],
+    genres: [],
   });
 
   function handleChange(el) {
     setInput({
       ...input,
-      [el.target.name]: el.target.value
+      [el.target.name]: el.target.value,
     });
     setErrors(
       validate({
@@ -43,28 +44,42 @@ export default function VideogameCreate() {
   }
 
   function handleCheck(event) {
-    if (event.target.cheked) {
+    
+    if (event.target.checked) {
       setInput({
         ...input,
-        status: event.target.value,
+        platforms: [...input.platforms, event.target.value],
+      });
+    } else {
+      setInput({
+        ...input,
+        platforms: input.platforms.filter((el) => el !== event.target.value),
       });
     }
   }
+  
+  console.log(input)
 
   function handleSelect(event) {
-    setInput({
-      ...input,
-      genre: [...input.genre,event.target.value],
-    });
+    
+     console.log(event.target.value)
+     
+     setInput({
+       ...input,
+       genres: [...input.genres, event.target.value],
+      });
+      
   }
+  
+
 
   function handleSubmit(el) {
-    el.preventDefaul();
-    console.log(input);
+    el.preventDefault();
+    
     setErrors(
       validate({
         ...input,
-        [el.target.name]: el.target.value,
+        [el.target.name]: el.target.value
       })
     );
     dispatch(postVideogame(input));
@@ -72,10 +87,11 @@ export default function VideogameCreate() {
     setInput({
       name: "",
       description: "",
+      img:"",
       released: "",
       rating: "",
       platforms: [],
-      genre: [],
+      genres: [],
     });
     history.push("/home");
   }
@@ -83,13 +99,14 @@ export default function VideogameCreate() {
   function handleDelete(el) {
     setInput({
       ...input,
-      genre: input.genre.filter((gen) => gen !== el),
+      genres: input.genres.filter((gen) => gen !== el),
+      platforms: input.platforms.filter(plat => plat !== el)
     });
   }
 
   useEffect(() => {
     dispatch(getGenres());
-  },[dispatch]);
+  }, [dispatch]);
 
   return (
     <div>
@@ -121,36 +138,92 @@ export default function VideogameCreate() {
             name="rating"
             onChange={handleChange}
           />
-          <label onChange={handleCheck}>Platforms</label>
+          <label>Platforms</label>
           <label>
-            <input type="checkbox" value="PC" name="PC" />
+            <input
+              type="checkbox"
+              value="PC"
+              name="PC"
+              onChange={(e) => handleCheck(e)}
+            />
+            PC
           </label>
           <label>
-            <input type="checkbox" value="PS" name="PC" />
+            <input
+              type="checkbox"
+              value="PS"
+              name="PS"
+              onChange={(e) => handleCheck(e)}
+            />
+            PS
           </label>
           <label>
-            <input type="checkbox" value="XBOX" name="PC" />
+            <input
+              type="checkbox"
+              value="XBOX"
+              name="XBOX"
+              onChange={(e) => handleCheck(e)}
+            />
+            XBOX
           </label>
           <label>
-            <input type="checkbox" value="NINTENDO" name="PC" />
+            <input
+              type="checkbox"
+              value="NINTENDO"
+              name="NINTENDO"
+              onChange={(e) => handleCheck(e)}
+            />
+            NINTENDO
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Android"
+              name="ANDROID"
+              onChange={(e) => handleCheck(e)}
+            />
+            ANDROID
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="IOs"
+              name="IOS"
+              onChange={(e) => handleCheck(e)}
+            />
+            IOS
           </label>
           <label>Image</label>
-          <input type="img" value={input.img} name="img" />
+          <input
+            type="img"
+            value={input.img}
+            name="img"
+            onChange={handleChange}
+          />
         </div>
+        
+        <label>Released date:</label>
+          <input
+            type="date"
+            value={input.released}
+            name="date"
+            onChange={handleChange}
+          />
 
         <select onChange={(event) => handleSelect(event)}>
-          {genres.map((genre) => (
-            <option value={genre.name}>{genre.name}</option>
+          {genres.map((genres) => (
+            <option value={genres.name}>{genres.name}</option>
           ))}
         </select>
 
-        <button type="submit" onClick={handleSubmit}> Crear VideoGame</button>
+        <button type="submit" onClick={handleSubmit}>
+          Crear VideoGame
+        </button>
       </form>
 
-      {input.genre.map((el) => {
-
+      {input.genres.map((el) => {
         //MIRAR QUE TRAE EL CONSOLELOG
-        console.log(el);
+        
         return (
           <div className="divGenre">
             <p>{el}</p>

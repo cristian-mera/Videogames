@@ -2,7 +2,7 @@ const { Router } = require("express");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 const axios = require("axios");
-const { Genre, Videogame } = require("../db.js");
+const { Genres, Videogame } = require("../db.js");
 //const Videogame = require("../models/Videogame");
 const { API_KEY } = process.env;
 
@@ -35,19 +35,20 @@ const getApiInfo = async () => {
       rating: el.rating,
       platforms: el.platforms.map((subEl) => subEl.platform.name),
       img: el.background_image,
-      genre: el.genres.map(gen => gen.name)
+      genres: el.genres.map(gen => gen.name)
     };
   });
   return apiInfo;
 };
 
 const getDbInfo = async () => {
+  console.log('el videogame' + Videogame)
   return await Videogame.findAll({
     include: {
-      model: Genre,
-      attributtes: ["name"],
+      model: Genres,
+      attributes: ["name"],
       through: {
-        attributtes: [],
+        attributes: [],
       },
     },
   });
@@ -56,6 +57,15 @@ const getDbInfo = async () => {
 const getAllVideogames = async () => {
   const apiInfo = await getApiInfo();
   const dbInfo = await getDbInfo();
+  const arrayGenres = dbInfo.map(el => {
+    el.genres.forEach(element => {
+      console.log('soy el elemento'+dbInfo)
+      
+    });
+  }
+    
+    )
+  
   const infoTotal = apiInfo.concat(dbInfo);
   return infoTotal;
 };
@@ -81,37 +91,39 @@ router.get("/genres", async (req, res) => {
   const genres = genresApi.data.results.map((el) => el.name);
   console.log(genres);
   genres.forEach((el) => {
-    Genre.findOrCreate({
+    Genres.findOrCreate({
       where: { name: el },
     
     });
   });
 
-  const allGenres = await Genre.findAll();
+  const allGenres = await Genres.findAll();
   res.status(200).send(allGenres);
 });
 
 router.post("/videogame", async (req, res) => {
-  let { name, description, released, rating, platforms, createdInDb, genre } =
+  let { name, description, released, rating, platforms, createdInDb, genres, img } =
     req.body;
 
   let videogameCreated = await Videogame.create({
     name,
     description,
     released,
+    img,
     rating,
     platforms,
     createdInDb,
-    genre
   });
 
-  let genreDb = await Genre.findAll({
+  let genresDb = await Genres.findAll({
     where: {
-      name: genre,
+      name: genres,
     },
+    
   });
-
-  videogameCreated.addGenre(genreDb)
+  console.log('Soy el genresDB' + genresDb)
+  
+  videogameCreated.addGenres(genresDb)
   res.send('videogame Created')
 });
 
@@ -125,5 +137,10 @@ router.get('/videogames/:id', async (req, res) => {
     res.status(404).send('Game not found')
   }
 })
+
+// router.get('/vieogames_genre/:id', async (req, res) =>{
+//   const id = req.params.id;
+//   const videogame = await 
+// })
 
 module.exports = router;

@@ -1,5 +1,5 @@
 import axios from "axios";
-const { API_KEY } = process.env;
+
 
 export function getVideogames() {
   return async function (dispatch) {
@@ -57,7 +57,7 @@ export function filterVideogamesByGenre(payload) {
 
 export function filterCreated(payload) {
   return {
-    type: "FILTER_CREATED",
+    type: "FILTER_",
     payload,
   };
 }

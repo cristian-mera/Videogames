@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
 import SearchBar from "./SearchBar";
+import defaultImage from '../components/videogame.png'
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -68,6 +69,7 @@ export default function Home() {
       </button>
       <div>
         <select onChange={targetValue => handleSort(targetValue)}>
+          <option value="all">A-Z...</option>
           <option value="ascendent">Assendent</option>
           <option value="descendent">Descendent</option>
         </select>
@@ -93,11 +95,11 @@ export default function Home() {
           return (
               <Link key={el.id} to={"/home/" + el.id}>
                                                           {/* agregar imagen por default */}
-                <Card name={el.name} img={el.img ? el.img : '../videogame.png'} genre={el.genre}  />;
+                <Card name={el.name} img={el.img ? el.img : defaultImage} genres={el.genres}  />
                 {/* {console.log(el.genre)} */}
               </Link>
             
-          );
+          )
         })}
       </div>
     </div>
