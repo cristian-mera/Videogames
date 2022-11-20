@@ -58,11 +58,11 @@ export default function VideogameCreate() {
     }
   }
   
-  console.log(input)
+  
 
   function handleSelect(event) {
     
-     console.log(event.target.value)
+     
      
      setInput({
        ...input,
@@ -123,6 +123,9 @@ export default function VideogameCreate() {
             name="name"
             onChange={handleChange}
           />
+          {errors.name && (
+            <p className="Error">{errors.name}</p>
+          )}
           {errors.name && <p className="error">{errors.name}</p>}
           <label>Description</label>
           <input

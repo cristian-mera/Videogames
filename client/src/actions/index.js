@@ -1,6 +1,7 @@
 import axios from "axios";
 
 
+
 export function getVideogames() {
   return async function (dispatch) {
     var json = await axios.get("http://localhost:3001/videogames", {});
@@ -42,7 +43,7 @@ export function getGenres(){
 export function postVideogame (payload){
   return async function (dispatch){
     const response = await axios.post ('http://localhost:3001/videogame', payload)
-    console.log(response)
+    
     return response
   }
 }
@@ -55,9 +56,18 @@ export function filterVideogamesByGenre(payload) {
   };
 }
 
+export function filterByRating(payload){
+  
+  return {
+    type: "FILTER_BY_RATING",
+    payload,
+
+  };
+}
+
 export function filterCreated(payload) {
   return {
-    type: "FILTER_",
+    type: "FILTER_CREATED",
     payload,
   };
 }
@@ -69,4 +79,20 @@ export function orderByName(payload) {
   };
 }
 
-
+export function getDetail (id){
+  console.log(id)
+  return async function (dispatch){
+    
+    try {
+      var json = await axios.get(`https://api.rawg.io/api/games/${id}?key=8ab93b0920934fe1bad538defb81c4ea`)
+      
+      return dispatch ({
+        type: "GET_DETAILS",
+        payload: json.data
+      })
+    }catch (error){
+      
+      console.log(error)
+    }
+  }
+}
