@@ -7,13 +7,13 @@ import {
   filterByRating,
   orderByName,
   getGenres,
-  getDetail,
 } from "../actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
 import SearchBar from "./SearchBar";
 import defaultImage from "../components/videogame.png";
+import "../styles/home.css";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -61,7 +61,7 @@ export default function Home() {
     event.preventDefault();
     dispatch(filterByRating(event.target.value));
     setCurrentPage(1);
-    setOrden(`ordenado ${event.target.value}`)
+    setOrden(`ordenado ${event.target.value}`);
   }
 
   function handleSort(event) {
@@ -69,63 +69,70 @@ export default function Home() {
     dispatch(orderByName(event.target.value));
     setCurrentPage(1);
     setOrden(`ordenado ${event.target.value}`);
-
   }
 
   return (
-    <div>
-      <Link to="/videogame">Crear Videojuego</Link>
-      <h1>Lista de Juegos</h1>
-      <button
-        onClick={(event) => {
-          handleClick(event);
-          
-        }}
-      >
-        Reload Videogames
-      </button>
-      <div>
-        <select onChange={(targetValue) => handleSort(targetValue)}>
-          <option value="all">A-Z...</option>
-          <option value="ascendent">Assendent</option>
-          <option value="descendent">Descendent</option>
-        </select>
-        <select onChange={(targetValue) => handleFilterByGenre(targetValue)}>
-          {generos.map((gen) => (
-            <option value={gen.name.toString()}>{gen.name}</option>
-          ))}
-        </select>
-        <select onChange={(targetValue) => handleFilterRating(targetValue)}>
-          <option value="noRating">By Rating</option>
-          <option value="topRated">Top Rated</option>
-          <option value="botonRated">Boton Rated</option>
-        </select>
-        <select onChange={(targetValue) => handleFilterCreated(targetValue)}>
-          <option value="all">All Videogames</option>
-          <option value="created">Your Videogames</option>
-          <option value="existent">Existent Videogames</option>
-        </select>
+    <div className="home_container">
+      <div className="home_navigation">
         <Paginado
           videogamesPerPage={videogamesPerPage}
           allVideogames={allVideogames.length}
           paginado={paginado}
         />
-        <SearchBar />
-
-        {currentVideogames?.map((el) => {
-          return (
-            <Link key={el.id} to={"/videogames/" + el.id}  >
-              {/* agregar imagen por default */}
-              <Card
-                name={el.name}
-                img={el.img ? el.img : defaultImage}
-                genres={el.genres}
-                createdInDb={el.createdInDb}
-                rating={el.rating}
-              />
-            </Link>
-          );
-        })}
+      </div>
+      <div className="home_body">
+        <div className="home_filter_container">
+          <SearchBar />
+          <select className="home_filter_select" onChange={(targetValue) => handleSort(targetValue)}>
+            <option value="all">A-Z...</option>
+            <option value="ascendent">Assendent</option>
+            <option value="descendent">Descendent</option>
+          </select>
+          <select className="home_filter_select" onChange={(targetValue) => handleFilterByGenre(targetValue)}>
+            {generos.map((gen) => (
+              <option value={gen.name.toString()}>{gen.name}</option>
+            ))}
+          </select>
+          <select className="home_filter_select" onChange={(targetValue) => handleFilterRating(targetValue)}>
+            <option value="noRating">By Rating</option>
+            <option value="topRated">Top Rated</option>
+            <option value="botonRated">Boton Rated</option>
+          </select>
+          <select className="home_filter_select" onChange={(targetValue) => handleFilterCreated(targetValue)}>
+            <option value="all">All Videogames</option>
+            <option value="created">Your Videogames</option>
+            <option value="existent">Existent Videogames</option>
+          </select>
+          <Link to="/videogame">Create Videogame</Link>
+        </div>
+        <div className="home_gamelist_container">
+          <div className="home_gamelist_title">
+            <h1>Game List</h1>
+            <button className="home_button"
+              onClick={(event) => {
+                handleClick(event);
+              }}
+            >
+              Reload Videogames
+            </button>
+          </div>
+          <div className="home_gamelist_cards">
+            {currentVideogames?.map((el) => {
+              return (
+                <Link key={el.id} to={"/videogames/" + el.id}>
+                  {/* agregar imagen por default */}
+                  <Card
+                    name={el.name}
+                    img={el.img ? el.img : defaultImage}
+                    genres={el.genres}
+                    createdInDb={el.createdInDb}
+                    rating={el.rating}
+                  />
+                </Link>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );

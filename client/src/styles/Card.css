@@ -1,0 +1,31 @@
+.container{
+  display: inline-block;
+  max-height: 450px;
+max-width: 300px;
+border: solid rgb(212, 18, 18);
+justify-content: space-between;
+margin: 10px;
+}
+
+.container_card_text{
+  display:list-item;
+  list-style: none;
+  border: solid black;
+  border-radius: 10px;
+background-color: rgb(228, 161, 60);
+max-height: 440px;
+max-width: 280px;
+
+
+}
+.container_card_name{
+  text-decoration: black; 
+  font-size:20px;
+  max-height: 20px;
+}
+
+.container_card_img{
+  width: 230px;
+  height: 300px;
+  border-radius: 10px;
+}

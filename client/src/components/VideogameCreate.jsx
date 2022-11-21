@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { postVideogame, getGenres } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import '../styles/videogameCreate.css'
 
 function validate(input) {
   let errors = {};
@@ -113,7 +114,7 @@ export default function VideogameCreate() {
       <Link to="/home">
         <button>Return</button>
       </Link>
-      <h1>Create you Videogame</h1>
+      <h1>Create your Videogame</h1>
       <form action="">
         <div>
           <label>Nombre</label>

@@ -1,0 +1,18 @@
+.paginado{
+
+  display: inline-block;
+}
+
+.paginado a {
+  color: black;
+  float: left;
+  padding: 15px 25px;
+  text-decoration: none;
+}
+
+.paginado a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.paginado a:hover:not(.active) {background-color: #ddd;}
