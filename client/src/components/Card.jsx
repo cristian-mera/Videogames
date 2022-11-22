@@ -2,9 +2,10 @@ import React from "react";
 import "../styles/Card.css";
 
 export default function Card({ name, img, genres, createdInDb, id, rating }) {
+  console.log(genres)
   return (
     <div className="container">
-      <div>
+      <div className="container_card">
         <div className="container_card_text">
           <h3 className="container_card_name">{name}</h3>
 
@@ -17,10 +18,9 @@ export default function Card({ name, img, genres, createdInDb, id, rating }) {
           </h5>
           <h5 className="container_card_rating">Rating: {rating}</h5>
         </div>
-        <div className="container_card_image" >
-
-        <img src={img} alt="img not found" className="container_card_img" />
-        </div>
+        
+          <img src={img} alt="img not found" className="container_card_img" />
+        
       </div>
     </div>
   );

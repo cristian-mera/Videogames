@@ -4,44 +4,46 @@
 }
 
 .home_container{
-  background-color: rgba(0, 0, 0, 0.623);
+  background: url('https://pbs.twimg.com/media/EG26rJ1X0AAGyNr.jpg:large');
+  
   background-attachment:fixed;
-  background-size: auto;
-  max-height: 100vh;
+  background-size:contain;
+  
+  height: auto;
 }
 .home_body{
   display: flex;
+  height: auto;
 }
 .home_navigation{
-  height: 5vh;
+  height: 0px;
 }
 .home_filter_container{
   display:flex;
   flex-direction: column;
   justify-content: space-evenly;
-  
+  padding: 0 20px;
   align-items: center;
-  border: solid green;
+  
   width: 20vw;
-  max-height: 100vh;
+  max-height: auto;
   vertical-align: middle;
 }
 .home_gamelist_container{
-  border: solid rgb(107, 35, 223);
   width: 80vw;
-  max-height: 100vh;
+  height: 100vh;
   vertical-align: middle;
+  
 }
+.home_gamelist_cards{
+  height: 80vh;
+overflow: auto;
+}
+
 .home_gamelist_title{
   color: white;
 }
 
-input[type=text] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-}
 .home_filter_select {
   width: 100%;
   padding: 16px 20px;
@@ -61,14 +63,23 @@ input[type=text] {
   margin: 4px 2px;
   transition-duration: 0.4s;
   cursor: pointer;
-
+  border-radius: 7px;
 
   background-color: white; 
   color: black; 
-  border: 2px solid #008CBA;
+  
 }
 button:hover{
   
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
   
+}
+.home_gamelist_create{
+  background-color: white; 
+  color: black; 
+  
+}
+.home_gamelist_create :hover {
+  background-color: #008CBA;
+  color: white;
 }

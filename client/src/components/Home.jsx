@@ -73,13 +73,7 @@ export default function Home() {
 
   return (
     <div className="home_container">
-      <div className="home_navigation">
-        <Paginado
-          videogamesPerPage={videogamesPerPage}
-          allVideogames={allVideogames.length}
-          paginado={paginado}
-        />
-      </div>
+    
       <div className="home_body">
         <div className="home_filter_container">
           <SearchBar />
@@ -91,7 +85,7 @@ export default function Home() {
           <select className="home_filter_select" onChange={(targetValue) => handleFilterByGenre(targetValue)}>
             {generos.map((gen) => (
               <option value={gen.name.toString()}>{gen.name}</option>
-            ))}
+              ))}
           </select>
           <select className="home_filter_select" onChange={(targetValue) => handleFilterRating(targetValue)}>
             <option value="noRating">By Rating</option>
@@ -103,9 +97,14 @@ export default function Home() {
             <option value="created">Your Videogames</option>
             <option value="existent">Existent Videogames</option>
           </select>
-          <Link to="/videogame">Create Videogame</Link>
+          <Link className="home_button" to="/videogame">Create Videogame</Link>
         </div>
         <div className="home_gamelist_container">
+            <Paginado
+              videogamesPerPage={videogamesPerPage}
+              allVideogames={allVideogames.length}
+              paginado={paginado}
+            />
           <div className="home_gamelist_title">
             <h1>Game List</h1>
             <button className="home_button"
@@ -119,7 +118,7 @@ export default function Home() {
           <div className="home_gamelist_cards">
             {currentVideogames?.map((el) => {
               return (
-                <Link key={el.id} to={"/videogames/" + el.id}>
+                <Link  key={el.id} to={"/videogames/" + el.id}>
                   {/* agregar imagen por default */}
                   <Card
                     name={el.name}

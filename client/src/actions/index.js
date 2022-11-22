@@ -80,18 +80,20 @@ export function orderByName(payload) {
 }
 
 export function getDetail (id){
-  console.log(id)
+  
   return async function (dispatch){
     
     try {
-      var json = await axios.get(`https://api.rawg.io/api/games/${id}?key=8ab93b0920934fe1bad538defb81c4ea`)
+      var json = await axios.get(`https://api.rawg.io/api/games/${id}?key=8ab93b0920934fe1bad538defb81c4ea`,{
+
+      })
       
       return dispatch ({
         type: "GET_DETAILS",
         payload: json.data
       })
     }catch (error){
-      
+      console.log('catcheo')
       console.log(error)
     }
   }
