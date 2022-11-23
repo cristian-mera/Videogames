@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/Card.css";
 
 export default function Card({ name, img, genres, createdInDb, id, rating }) {
-  console.log(genres)
+  
   return (
     <div className="container">
       <div className="container_card">

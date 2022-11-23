@@ -33,7 +33,9 @@ export default function Home() {
     setCurrentPage(pageNumber);
   };
 
+  
   useEffect(() => {
+    
     dispatch(getVideogames());
   }, [dispatch]);
 
@@ -58,6 +60,7 @@ export default function Home() {
   }
 
   function handleFilterRating(event) {
+    console.log(allVideogames)
     event.preventDefault();
     dispatch(filterByRating(event.target.value));
     setCurrentPage(1);

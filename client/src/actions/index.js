@@ -84,9 +84,13 @@ export function getDetail (id){
   return async function (dispatch){
     
     try {
-      var json = await axios.get(`https://api.rawg.io/api/games/${id}?key=8ab93b0920934fe1bad538defb81c4ea`,{
+      var json = await axios.get(
+        `http://localhost:3000/videogames/${id}` &&
+        `https://api.rawg.io/api/games/${id}?key=8ab93b0920934fe1bad538defb81c4ea`
 
-      })
+      )
+
+      
       
       return dispatch ({
         type: "GET_DETAILS",
